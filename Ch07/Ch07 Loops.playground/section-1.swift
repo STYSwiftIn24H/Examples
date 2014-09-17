@@ -30,8 +30,8 @@ var rollOne: Int
 var rollTwo: Int
 
 do {
-    rollOne = Int(arc4random()) % 6 + 1
-    rollTwo = Int(arc4random()) % 6 + 1
+    rollOne = Int(arc4random_uniform(6)) + 1
+    rollTwo = Int(arc4random_uniform(6)) + 1
     println("one: \(rollOne), two: \(rollTwo)")
     ++timesRolled
 } while rollOne != rollTwo
