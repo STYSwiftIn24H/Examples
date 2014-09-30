@@ -23,20 +23,9 @@
 }
 
 - (void)setupSongs {
-    Song *song1 = [Song new];
-    song1.title = @"Happy";
-    song1.artist = @"Pharrell";
-    song1.rating = @4.5;
-    
-    Song *song2 = [Song new];
-    song2.title = @"Word Crimes";
-    song2.artist = @"Weird Al Yankovic";
-    song2.rating = @4.0;
-    
-    Song *song3 = [Song new];
-    song3.title = @"Untethered";
-    song3.artist = @"Sons of the Sea";
-    song3.rating = @4.8;
+    Song *song1 = [[Song alloc] initWithTitle:@"Happy" artist:@"Pharrell" rating:@4.5];
+    Song *song2 = [[Song alloc] initWithTitle:@"Word Crimes" artist:@"Weird Al Yankovic" rating:@4.0];
+    Song *song3 = [[Song alloc] initWithTitle:@"Untethered" artist:@"Sons of the Sea" rating:@4.8];
     
     self.songs = [@[song1, song2, song3] mutableCopy];
 }
@@ -46,8 +35,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.songs[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
+        Song *song = self.songs[indexPath.row];
+        [[segue destinationViewController] setDetailItem:song];
     }
 }
 

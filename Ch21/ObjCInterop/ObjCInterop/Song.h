@@ -12,7 +12,6 @@
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *artist;
-//@property (nonatomic, strong) NSURL *albumArtURL;
 @property (nonatomic, strong) NSNumber *rating;
 
 - (instancetype)initWithTitle:(NSString *)title artist:(NSString *)artist rating:(NSNumber *)number;
