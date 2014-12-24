@@ -9,15 +9,15 @@ enum GradesKTo5: String {
 }
 
 var myKid = GradesKTo5.Kindergarten
-myKid.toRaw()
+myKid.rawValue
 // 1 year passes...
 myKid = .First
-myKid.toRaw()
+myKid.rawValue
 
 let secondGrade = GradesKTo5.Second
-let thirdGrade = GradesKTo5.Third.toRaw()
+let thirdGrade = GradesKTo5.Third.rawValue
 
-let fourthGrade = GradesKTo5.fromRaw("4th")
+let fourthGrade = GradesKTo5(rawValue: "4th")
 if let fourth = fourthGrade {
-    println(fourth.toRaw())
+    println(fourth.rawValue)
 }

@@ -8,4 +8,4 @@ enum GradesKTo5: Int {
 }
 
 var thirdGrade = GradesKTo5.Third
-thirdGrade.toRaw()
+thirdGrade.rawValue
