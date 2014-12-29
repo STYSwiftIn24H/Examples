@@ -35,8 +35,10 @@ class SongsTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-
-        cell.textLabel.text = "Row \(indexPath.row)"
+        
+        // need to use optional chaining due to textLabel being of type UILabel?.
+        cell.textLabel?.text = "Row \(indexPath.row)"
+        
         let detail = self.tableView(tableView, titleForHeaderInSection: indexPath.section) ?? ""
         cell.detailTextLabel?.text = "In \(detail)"
 
