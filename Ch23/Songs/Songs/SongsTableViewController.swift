@@ -21,9 +21,9 @@ class SongsTableViewController: UITableViewController {
         println("main: \(NSDate())")
         let requestUrlString = "https://itunes.apple.com/search?term=beatles&country=us"
         let requestUrl = NSURL(string: requestUrlString)
-        let responseData = NSData(contentsOfURL: requestUrl)
+        let responseData = NSData(contentsOfURL: requestUrl!) // requestUrl is now requestUrl! in Xcode 6.1, due to NSURL(string:) returning an optioal
         var error: NSError?
-        let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(responseData, options: NSJSONReadingOptions.AllowFragments, error: &error)
+        let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.AllowFragments, error: &error)
 //        self.songsFromJson(json)
         println("json: \(json)")
         println("main: \(NSDate())")
