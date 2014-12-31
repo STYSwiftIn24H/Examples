@@ -44,7 +44,7 @@ addVariadicNumbers(4)
 addVariadicNumbers(0)
 
 
-// Listing 8.5
+// Listing 8.5 - name of function is different from book to avoid name conflicts with Listing 8.4
 func addVariadicNumbersAndReturnInt(numbers: Int...) -> Int {
     var result = 0
     for eachNum in numbers {
@@ -98,11 +98,11 @@ mmm.mode
 
 
 // Listing 8.6
-func multiply(thisNumber num1: Int, byThisNumber num2: Int) -> Int {
+func multiply(thisNumber num1: Int, byAnotherNumber num2: Int) -> Int {
     return num1 * num2
 }
 
-let result = multiply(thisNumber: 6, byThisNumber: 7)
+let result = multiply(thisNumber: 6, byAnotherNumber: 7)
 
 
 // Listing 8.7
