@@ -8,7 +8,8 @@ func mean(numbers: [Int]) -> Double {
     for number in numbers {
         sum += Double(number)
     }
-    return sum / Double(numbers.count)
+    let mean = sum / Double(numbers.count)
+    return mean
 }
 
 func median(numbers: [Int]) -> Double {

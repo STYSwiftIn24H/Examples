@@ -2,7 +2,7 @@
 // Ch09 Map Each Element Try-It-Yourself example
 //
 
-func square(num:Int) -> Int {
+func square(num: Int) -> Int {
     return num * num
 }
 
