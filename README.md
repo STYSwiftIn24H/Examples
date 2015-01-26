@@ -5,5 +5,6 @@ As changes to the language come, and as issues are found, this repository will b
 BJ Miller's blog contains details about updates to the book. Please see the posts on [bjmiller.me](http://bjmiller.me)
 * [Swift 1.1](http://bjmiller.me/post/106367636847/styswiftin24h-update); differences in Swift 1.1 in terms of enums and failable initializers, and what changed since printing.  
 * [Errata fix](http://bjmiller.me/post/109163406177/errata-fix-in-teach-yourself-swift-in-24-hours); update to Listing 10.6 with correct playground output  
+
 #####Contribution
 Please submit pull requests for anything you find that disagrees with the book, or if a sample in the book needs updating. It all makes a better experience for every reader.
