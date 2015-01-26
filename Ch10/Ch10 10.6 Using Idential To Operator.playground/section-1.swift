@@ -20,6 +20,12 @@ let circleThree = circleOne
 
 if circleOne === circleTwo {
     "circleOne is identical to circleTwo"
-} else if circleOne === circleThree {
-    "circleOne is identical to cirleThree"
+} else {
+    "circleOne is not identical to cirleTwo"
+}
+
+if circleOne !== circleThree {
+    "circleOne is not identical to circleThree"
+} else {
+    "circleOne is identical to circleThree"
 }

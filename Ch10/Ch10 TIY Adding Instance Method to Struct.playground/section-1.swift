@@ -8,7 +8,7 @@ struct Point {
     func distanctTo(#point: Point) -> Double {
         let a = abs(self.x - point.x)
         let b = abs(self.y - point.y)
-        let c = sqrt(a*a + b*b)
+        let c = sqrt(a * a + b * b)
         return c
     }
     
