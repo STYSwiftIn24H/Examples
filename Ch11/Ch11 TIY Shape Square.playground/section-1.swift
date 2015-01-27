@@ -26,6 +26,7 @@ square.description()
 
 square.sideLength = 4
 square.title = "SQUARE"
+
 shape.area()
 shape.description()
 square.area()
