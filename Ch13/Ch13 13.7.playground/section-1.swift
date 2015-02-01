@@ -10,6 +10,5 @@ struct Rectangle {
         self.init(width: 1.0, height: 2.0)
     }
 }
-var myRect = Rectangle()
-myRect.width = 4.0
-var myRect2 = Rectangle(width: 4.0, height: 6.0)
+let rect1 = Rectangle(width: 4.0, height: 6.0)
+let rect2 = Rectangle()

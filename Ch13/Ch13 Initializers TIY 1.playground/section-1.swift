@@ -2,7 +2,7 @@
 // Ch13 Try It Yourself #1
 //
 enum MelonType: String {
-    case Watermelon = "Watermelon", Cantaloup = "Cantaloup", Honeydew = "Honeydew"
+    case Watermelon = "Watermelon", Cantaloupe = "Cantaloupe", Honeydew = "Honeydew"
     init() {
         self = .Watermelon
     }
@@ -23,12 +23,12 @@ struct Melon {
         self.weightInPounds = weightInPounds
     }
     func description() -> String {
-        return "My \(melonType.toRaw()) has \(seedCount) seeds and weighs \(weightInPounds) lbs."
+        return "My \(melonType.rawValue) has \(seedCount) seeds and weighs \(weightInPounds) lbs."
     }
 }
 
 let defaultMelon = Melon()
-let customMelon = Melon(melonType: .Cantaloup, seedCount: 100, weightInPounds: 2.0)
+let customMelon = Melon(melonType: .Cantaloupe, seedCount: 100, weightInPounds: 2.0)
 
 defaultMelon.description()
 customMelon.description()

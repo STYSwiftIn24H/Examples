@@ -6,4 +6,4 @@ enum GradesKTo5: String {
     }
 }
 let k = GradesKTo5()
-k.toRaw()
+k.rawValue
