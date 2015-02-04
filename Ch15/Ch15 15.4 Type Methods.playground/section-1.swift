@@ -1,10 +1,10 @@
 struct Counter {
     static var count = 0
-    static func increaseCount() {
+    static func increaseCountByOne() {
         ++count
     }
 }
 
 Counter.count
-Counter.increaseCount()
+Counter.increaseCountByOne()
 Counter.count

@@ -1,6 +1,6 @@
 class AClass {
     class func aClassMethod() {
-        println("aClassMethod")
+        println("I am a class method")
     }
     class func bClassMethod() {
         aClassMethod()  // no need to prefix with class name if calling another class method
