@@ -2,10 +2,10 @@ class TestClass {
     var title: String
     init(title: String) {
         self.title = title
-        println("\(self.title) is initializing.")
+        println("\(self.title) is initialized.")
     }
     deinit {
-        println("\(self.title) is being deinitialized.")
+        println("\(title) is being deinitialized.")
     }
 }
 

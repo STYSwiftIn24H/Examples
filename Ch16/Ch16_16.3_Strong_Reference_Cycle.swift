@@ -8,10 +8,10 @@ class Phone {
     weak var owner: Person?
     init(model: iPhoneModel) {
         self.model = model
-        println("\(model.toRaw()) is being initialized.")
+        println("\(model.rawValue) is being initialized.")
     }
     deinit {
-        println("\(model.toRaw()) is deinitializing")
+        println("\(model.rawValue) is deinitializing")
     }
 }
 
