@@ -1,4 +1,4 @@
- protocol ButtonDelegateProtocol {
+protocol ButtonDelegateProtocol {
     func didTapButton(button: Button)
 }
 
@@ -18,7 +18,7 @@ class Button {
     }
     
     func buttonPressed() {
-        self.delegate.didTapButton(self)
+        self.delegate.didTapButton(self)  // `self.` is not necessary
     }
 }
 
