@@ -24,7 +24,7 @@ extension Transformers {
 let transformer = Transformers.Bumblebee
 switch transformer.type {
     case .Autobot:
-        println("\(transformer.toRaw()) is an Autobot.")
+        println("\(transformer.rawValue) is an Autobot.")
     default:
-        println("\(transformer.toRaw()) is a Decepticon.")
+        println("\(transformer.rawValue) is a Decepticon.")
 }
