@@ -1,11 +1,6 @@
 import Foundation
 
-protocol Returnable {
-    typealias ItemType
-    var any: ItemType? { get }
-    var allObjects: [ItemType] { get }
-}
-
+// existing struct from previous example
 struct Set<T: Equatable> {
     private var items = [T]()
     init() { }
@@ -39,6 +34,13 @@ extension Set {
         array.map { set.add($0) }
         return set
     }
+}
+
+// Listing 20.6
+protocol Returnable {
+    typealias ItemType
+    var any: ItemType? { get }
+    var allObjects: [ItemType] { get }
 }
 
 extension Set : Returnable {

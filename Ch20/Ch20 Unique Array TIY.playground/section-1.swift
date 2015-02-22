@@ -1,7 +1,6 @@
 func unique<T: Hashable>(array: [T]) -> [T] {
     var results = [T : Int]()
     array.map { results[$0] = 1 }
-//    return [T](results.keys)
     return results.keys.array
 }
 
