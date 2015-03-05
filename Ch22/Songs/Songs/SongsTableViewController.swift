@@ -34,7 +34,7 @@ class SongsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell // the as! operator is required in Xcode 6.3, Swift 1.2, as this is a forced failable downcast. If you do not have Xcode 6.3, simply remove the !.
         
         // need to use optional chaining due to textLabel being of type UILabel?.
         cell.textLabel?.text = "Row \(indexPath.row)"
@@ -48,7 +48,7 @@ class SongsTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let detailViewController = segue.destinationViewController as SongDetailViewController
+        let detailViewController = segue.destinationViewController as! SongDetailViewController  // The as! is inserted here also. Remove the ! if you are not yet using Xcode 6.3 or higher.
         detailViewController.song = Song(title: "Trippin' on a hole in a paper heart", artist: "Stone Temple Pilots", rating: 4.0)
     }
 
