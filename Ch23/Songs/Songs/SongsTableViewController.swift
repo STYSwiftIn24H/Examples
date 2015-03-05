@@ -12,28 +12,87 @@ import UIKit
 class SongsTableViewController: UITableViewController {
 
     var songs = [Song]()
+    private let cache = NSCache()
     
-    func songsFromJson(json: AnyObject?) {
-        
+    private func fetchData() {
+        let url = NSURL(string: "http://itunes.apple.com/search?term=beatles&country=us")!
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithURL(url) { data, response, error in
+            
+            if let taskError = error {
+                // handle error
+            } else {
+                let httpResponse = response as! NSHTTPURLResponse
+                switch httpResponse.statusCode {
+                case 200..<300:
+                    println("OK")
+                    self.parseJson(data)
+                default:
+                    println("request failed: \(httpResponse.statusCode)")
+                }
+            }
+            
+        }
+        task.resume()
     }
     
-    func fetchSongs() {
-        println("main: \(NSDate())")
-        let requestUrlString = "https://itunes.apple.com/search?term=beatles&country=us"
-        let requestUrl = NSURL(string: requestUrlString)
-        let responseData = NSData(contentsOfURL: requestUrl!) // requestUrl is now requestUrl! in Xcode 6.1, due to NSURL(string:) returning an optioal
+    func parseJson(data: NSData) {
         var error: NSError?
-        let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.AllowFragments, error: &error)
-//        self.songsFromJson(json)
-        println("json: \(json)")
-        println("main: \(NSDate())")
+        let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: .allZeros, error: &error)
+        if error == nil {
+            if let unwrappedJson: AnyObject = json {
+                parseSongs(json: unwrappedJson)
+            }
+        }
     }
+    
+    func parseSongs(#json: AnyObject) {
+        // This method uses nested if-let conditional binding. Swift 1.2 allows for multiple bindings in a single if statement, but since the topic is not covered in the book, this example's active code will remain as printed in the book. The Swift 1.2 version is below, commented out, if you would like to see how it works.
+        
+        songs = []
+        if let array = json["results"] as? [[String : AnyObject]] {
+            for songDictionary in array {
+                if let title = songDictionary["trackName"] as? String {  // The Note on pg 385 states casting to NSString is necessary, but Swift has fixed that issue.
+                    if let artist = songDictionary["artistName"] as? String {
+                        if let albumName = songDictionary["collectionName"] as? String {
+                            if let artworkUrl = songDictionary["artworkUrl100"] as? String {
+                                let song = Song(title: title, artist: artist, albumName: albumName, artworkUrl: artworkUrl)
+                                songs.append(song)
+                            }
+                        }
+                    }
+                }
+            }
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
 
+        /*
+        songs = []
+        if let array = json["results"] as? [[String : AnyObject]] {
+            for songDictionary in array {
+                if let title = songDictionary["trackName"] as? String,
+                    artist = songDictionary["artistName"] as? String,
+                    albumName = songDictionary["collectionName"] as? String,
+                    artworkUrl = songDictionary["artworkUrl100"] as? String {
+                        let song = Song(title: title, artist: artist, albumName: albumName, artworkUrl: artworkUrl)
+                        songs.append(song)
+                }
+            }
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
+        */
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchSongs()
+
+        fetchData()
     }
-    
+
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -49,20 +108,66 @@ class SongsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
 
         let song = songs[indexPath.row]
-        cell.textLabel?.text = "\(song.title)"
-        cell.detailTextLabel?.text = "\(song.albumName)"
+        cell.textLabel?.text = song.title
+        cell.detailTextLabel?.text = song.albumName
+        
+        if let image = cache.objectForKey(song.artworkUrl) as? UIImage {
+            cell.imageView?.image = image
+        } else {
+            // you can replace the following dispatch_async block with the below Operation Queue code
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                if let data = NSData(contentsOfURL: NSURL(string: song.artworkUrl)!) {
+                    if let image = UIImage(data: data) {
+                        self.cache.setObject(image, forKey: song.artworkUrl)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                        }
+                    }
+                }
+            }
+            // comment out the above code if you wish to use the following Operation Queue
 
+            // The following code is the equivalent to the above dispatch_async(dispatch_get_global_queue...), using NSOperationQueue
+            /*
+            let queue = NSOperationQueue()
+            class MyOperation : NSOperation {
+                var song: Song
+                var cache: NSCache
+                init(song: Song, cache: NSCache) {
+                    self.song = song
+                    self.cache = cache
+                }
+                
+                override func main() {
+                    autoreleasepool {
+                        if let data = NSData(contentsOfURL: NSURL(string: self.song.artworkUrl)!) {
+                            if let image = UIImage(data: data) {
+                                self.cache.setObject(image, forKey: self.song.artworkUrl)
+                            }
+                        }
+                    }
+                }
+            }
+            let operation = MyOperation(song: song, cache: cache)
+            operation.completionBlock = {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }
+            }
+            queue.addOperation(operation)
+            */
+
+        }
+        
         return cell
     }
-
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let detailViewController = segue.destinationViewController as SongDetailViewController
-        let cell = sender as UITableViewCell
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let detailViewController = segue.destinationViewController as! SongDetailViewController  // Swift 1.2 requires the as! operator to force a failable downcast
+        let cell = sender as! UITableViewCell
         let indexPath = tableView.indexPathForCell(cell)!
         let song = songs[indexPath.row]
         detailViewController.song = song

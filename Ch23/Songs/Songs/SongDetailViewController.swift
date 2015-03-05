@@ -14,7 +14,6 @@ class SongDetailViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
-    @IBOutlet weak var ratingLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
